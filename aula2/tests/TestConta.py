@@ -21,6 +21,8 @@ class TestConta(unittest.TestCase):
 
     def test_adicionar_saldo(self):
         # IMPLICIT INLINE FIXTURE SETUP
+        self.conta = Conta("TitularTeste", 1, self.agencia)
+
         self.conta.adicionar_transacao(Entrada(Dinheiro(Moeda.BRL, 20, 0)))
         # EXERCISE SUT
         saldo = self.conta.calcular_saldo().formatado()
@@ -30,6 +32,8 @@ class TestConta(unittest.TestCase):
 
     def test_subtrair_saldo(self):
         # IMPLICIT INLINE FIXTURE SETUP
+        self.conta = Conta("TitularTeste", 1, self.agencia)
+        
         self.conta.adicionar_transacao(Entrada(Dinheiro(Moeda.BRL, 20, 0)))
         self.conta.adicionar_transacao(Saida(Dinheiro(Moeda.BRL, 40, 0)))
         # EXERCISE SUT
