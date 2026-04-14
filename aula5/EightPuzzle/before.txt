@@ -1,0 +1,10 @@
+    puzzle_game.xǁPuzzleGameǁ__generate_list_of_tiles____mutmut_3: survived
+    puzzle_game.xǁPuzzleGameǁ__generate_list_of_tiles____mutmut_12: survived
+    puzzle_game.xǁPuzzleGameǁ__put_tiles_in_dic_positions____mutmut_20: survived
+    puzzle_game.xǁPuzzleGameǁmove_tile_from_a_position_to_the_empty_position__mutmut_1: survived
+    puzzle_game.xǁPuzzleGameǁmove_tile_from_a_position_to_the_empty_position__mutmut_33: survived
+    puzzle_game.xǁPuzzleGameǁmove_tile_from_a_position_to_the_empty_position__mutmut_34: survived
+    puzzle_game.xǁPuzzleGameǁget_tile__mutmut_6: survived
+    puzzle_game.xǁPuzzleGameǁget_tile__mutmut_7: survived
+    puzzle_game.xǁPuzzleGameǁget_tile__mutmut_9: survived
+    puzzle_game.xǁPuzzleGameǁget_tile__mutmut_10: survived

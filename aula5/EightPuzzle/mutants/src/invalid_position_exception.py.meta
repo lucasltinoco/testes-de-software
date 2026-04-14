@@ -1,0 +1,21 @@
+{
+    "exit_code_by_key": {
+        "invalid_position_exception.x\u01c1InvalidPositionException\u01c1__init____mutmut_1": 0,
+        "invalid_position_exception.x\u01c1InvalidPositionException\u01c1__init____mutmut_2": 0,
+        "invalid_position_exception.x\u01c1InvalidPositionException\u01c1__init____mutmut_3": 0,
+        "invalid_position_exception.x\u01c1InvalidPositionException\u01c1__init____mutmut_4": 0
+    },
+    "durations_by_key": {
+        "invalid_position_exception.x\u01c1InvalidPositionException\u01c1__init____mutmut_1": 0.050696,
+        "invalid_position_exception.x\u01c1InvalidPositionException\u01c1__init____mutmut_2": 0.044314,
+        "invalid_position_exception.x\u01c1InvalidPositionException\u01c1__init____mutmut_3": 0.092,
+        "invalid_position_exception.x\u01c1InvalidPositionException\u01c1__init____mutmut_4": 0.100455
+    },
+    "type_check_error_by_key": {},
+    "estimated_durations_by_key": {
+        "invalid_position_exception.x\u01c1InvalidPositionException\u01c1__init____mutmut_1": 0.0008263439985967125,
+        "invalid_position_exception.x\u01c1InvalidPositionException\u01c1__init____mutmut_2": 0.0008263439985967125,
+        "invalid_position_exception.x\u01c1InvalidPositionException\u01c1__init____mutmut_3": 0.0008263439985967125,
+        "invalid_position_exception.x\u01c1InvalidPositionException\u01c1__init____mutmut_4": 0.0008263439985967125
+    }
+}
