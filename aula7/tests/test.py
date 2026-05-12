@@ -6,13 +6,19 @@ class Test(unittest.TestCase):
     def setUp(self):
         pass
 
-    def test_cria_Enterprise_W(self):
+    def test_cria_Empresa_W(self):
         result = Enterprise("W")
         self.assertIsInstance(result, Enterprise)
 
     def test_cria_Funcionario_joao(self):
         funcionario = Employee("Joao")
         self.assertIsInstance(funcionario, Employee)
+        
+    def test_cria_Funcionario_na_Empresa(self):
+        Empresa = Empresa("W")
+        Pedro = Employee("Pedro")
+        Empresa.insertEmployee(Pedro)
+        self.assertIn(Pedro, Empresa.Employees)
 
 if __name__ == "__main__":
     unittest.main()
