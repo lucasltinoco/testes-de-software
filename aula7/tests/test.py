@@ -1,5 +1,6 @@
 import unittest
 from Enterprise import Enterprise
+from Employee import Employee
 
 class Test(unittest.TestCase):
     def setUp(self):
