@@ -1,17 +1,17 @@
 import unittest
-from Empresa import Empresa
+from Enterprise import Enterprise
 
 class Test(unittest.TestCase):
     def setUp(self):
         pass
 
-    def test_cria_empresa_W(self):
-        result = Empresa("W")
-        self.assertIsInstance(result, Empresa)
+    def test_cria_Enterprise_W(self):
+        result = Enterprise("W")
+        self.assertIsInstance(result, Enterprise)
 
-    def test_cria_funcionario_joao(self):
-        funcionario = Funcionario("Joao")
-        self.assertIsInstance(funcionario, Funcionario)
+    def test_cria_Funcionario_joao(self):
+        funcionario = Employee("Joao")
+        self.assertIsInstance(funcionario, Employee)
 
 if __name__ == "__main__":
     unittest.main()
