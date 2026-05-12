@@ -174,19 +174,14 @@ class PuzzleGame:
         return self.board.__eq__(self.board_with_final_state)
 
     def get_tile(self, line, column):
-        print("\n")
         if line > 0 and line <= self.board.number_of_lines and \
                 column > 0 and column <= self.board.number_of_columns:
-            print(2)
             if line == self.line_of_empty_position and \
                 column == self.column_of_empty_position:
-                print(3)
                 return (" ")
             else:
-                print(4)
                 return self.board.get_tile(line, column)
         else:
-            print(5)
             raise InvalidPositionException()
 
     def __str__(self):
