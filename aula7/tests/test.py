@@ -1,6 +1,7 @@
 import unittest
 from Enterprise import Enterprise
 from Employee import Employee
+from Project import Project
 
 class Test(unittest.TestCase):
     def setUp(self):
