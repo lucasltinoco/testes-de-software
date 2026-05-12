@@ -1,12 +1,11 @@
 import unittest
+from TestHelper import TestHelper
 from Enterprise import Enterprise
 from Employee import Employee
 from Project import Project
 
-class Test(unittest.TestCase):
-    def setUp(self):
-        pass
 
+class Test(unittest.TestCase):
     def test_cria_Empresa_W(self):
         result = Enterprise("W")
         self.assertIsInstance(result, Enterprise)
@@ -30,6 +29,11 @@ class Test(unittest.TestCase):
         projeto2 = Project("2")
         EmpresaW.insertProject(projeto2)
         self.assertIn(projeto2, EmpresaW.Projects)
+        
+    def test_incluir_funcionario_em_projeto(self):
+        (_, Carlos, ProjetoWeb) = TestHelper.cria_template_padrao()
+        ProjetoWeb.insertEmployee(Carlos)
+        self.assertIn(Carlos, ProjetoWeb.Employees)
 
 if __name__ == "__main__":
     unittest.main()
