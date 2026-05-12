@@ -1,3 +1,5 @@
+import re
+
 from Employee import Employee
 from Project import Project
 
@@ -12,3 +14,7 @@ class Enterprise():
         
     def insertProject(self, project: Project):
         self.Projects.append(project)
+        
+    def findEmployees(self, string: str):
+        results = [e for e in self.Employees if re.search(string, e.name)]
+        return results
