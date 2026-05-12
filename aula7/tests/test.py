@@ -1,4 +1,5 @@
 import unittest
+from Empresa import Empresa
 
 class Test(unittest.TestCase):
     def setUp(self):
@@ -6,7 +7,7 @@ class Test(unittest.TestCase):
     
     def test_cria_empresa_W(self):
       result = Empresa("W")
-      self.assertIsInstance(Empresa)
+      self.assertIsInstance(result, Empresa)
 
 
 if __name__ == "__main__":
