@@ -20,5 +20,9 @@ class Test(unittest.TestCase):
         Empresa.insertEmployee(Pedro)
         self.assertIn(Pedro, Empresa.Employees)
 
+    def test_cria_Projeto(self):
+        projeto = Project("1")
+        self.assertIsInstance(projeto, Project)
+
 if __name__ == "__main__":
     unittest.main()
