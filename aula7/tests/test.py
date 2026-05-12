@@ -15,7 +15,7 @@ class Test(unittest.TestCase):
         self.assertIsInstance(funcionario, Employee)
         
     def test_cria_Funcionario_na_Empresa(self):
-        Empresa = Empresa("W")
+        Empresa = Enterprise("W")
         Pedro = Employee("Pedro")
         Empresa.insertEmployee(Pedro)
         self.assertIn(Pedro, Empresa.Employees)
