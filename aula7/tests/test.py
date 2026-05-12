@@ -31,7 +31,7 @@ class Test(unittest.TestCase):
         self.assertIn(projeto2, EmpresaW.Projects)
         
     def test_incluir_funcionario_em_projeto(self):
-        (_, Carlos, ProjetoWeb) = TestHelper.cria_template_padrao()
+        (_, Carlos, ProjetoWeb) = TestHelper().cria_template_padrao()
         ProjetoWeb.insertEmployee(Carlos)
         self.assertIn(Carlos, ProjetoWeb.Employees)
 
