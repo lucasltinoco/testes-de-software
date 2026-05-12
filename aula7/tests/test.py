@@ -34,6 +34,24 @@ class Test(unittest.TestCase):
         (_, Carlos, ProjetoWeb) = TestHelper().cria_template_padrao()
         ProjetoWeb.insertEmployee(Carlos)
         self.assertIn(Carlos, ProjetoWeb.Employees)
+        
+    def test_insere_multiplos_funcionarios_com_nome_igual_na_empresa(self):
+        Empresa = Enterprise("W")
+        Joao = Employee("João")
+        Joao2 = Employee("João")
+        Empresa.insertEmployee(Joao)
+        Empresa.insertEmployee(Joao2)
+        self.assertEqual(2, len(Empresa.Employees))
+
+    def test_busca_funcionario_por_nome_na_empresa(self):
+        (Empresa, Carlos, _) = TestHelper().cria_template_padrao()
+        Empresa.insertEmployee(Carlos)
+        Carlos2 = Employee("Carlos")
+        Empresa.insertEmployee(Carlos2)
+        Gabriel = Employee("Gabriel")
+        Empresa.insertEmployee(Gabriel)
+        result = Empresa.findEmployees("Carlos")
+        self.assertEqual(2, len(result))
 
 if __name__ == "__main__":
     unittest.main()
