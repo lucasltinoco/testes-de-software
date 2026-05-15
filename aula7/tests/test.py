@@ -94,5 +94,18 @@ class Test(unittest.TestCase):
             empresa.insertEmployeeInProject(pedro, projeto_engine)
         self.assertNotIn(pedro, projeto_engine.Employees)
 
+    def test_funcionario_pode_trabalhar_em_varios_projetos(self):
+        empresa = Enterprise("W")
+        ana = Employee("Ana")
+        projeto_web = Project("Projeto Web")
+        projeto_mobile = Project("Projeto Mobile")
+        empresa.insertEmployee(ana)
+        empresa.insertProject(projeto_web)
+        empresa.insertProject(projeto_mobile)
+        empresa.insertEmployeeInProject(ana, projeto_web)
+        empresa.insertEmployeeInProject(ana, projeto_mobile)
+        self.assertIn(ana, projeto_web.Employees)
+        self.assertIn(ana, projeto_mobile.Employees)
+
 if __name__ == "__main__":
     unittest.main()
