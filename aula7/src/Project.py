@@ -6,4 +6,5 @@ class Project:
         self.Employees = []
         
     def insertEmployee(self, employee: Employee):
-        self.Employees.append(employee)
+        if employee not in self.Employees:
+            self.Employees.append(employee)
