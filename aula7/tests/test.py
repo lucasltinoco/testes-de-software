@@ -56,20 +56,25 @@ class Test(unittest.TestCase):
     def test_nao_insere_mesmo_funcionario_duas_vezes_na_empresa(self):
         empresa = Enterprise("W")
         jose = Employee("José")
-
         empresa.insertEmployee(jose)
         empresa.insertEmployee(jose)
-
         self.assertEqual([jose], empresa.Employees)
 
     def test_nao_insere_mesmo_projeto_duas_vezes_na_empresa(self):
         empresa = Enterprise("W")
         projeto_web = Project("Projeto Web")
-
         empresa.insertProject(projeto_web)
         empresa.insertProject(projeto_web)
-
         self.assertEqual([projeto_web], empresa.Projects)
+
+    def test_insere_funcionario_a_projeto_da_empresa(self):
+        empresa = Enterprise("W")
+        jose = Employee("José")
+        projeto_web = Project("Projeto Web")
+        empresa.insertEmployee(jose)
+        empresa.insertProject(projeto_web)
+        empresa.insertEmployeeInProject(jose, projeto_web)
+        self.assertIn(jose, projeto_web.Employees)
 
 if __name__ == "__main__":
     unittest.main()
