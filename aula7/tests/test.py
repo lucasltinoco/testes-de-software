@@ -9,6 +9,7 @@ class Test(unittest.TestCase):
     def test_cria_Empresa_W(self):
         result = Enterprise("W")
         self.assertIsInstance(result, Enterprise)
+        self.assertEqual("W",result.name)
 
     def test_cria_Funcionario_joao(self):
         funcionario = Employee("Joao")
@@ -52,6 +53,15 @@ class Test(unittest.TestCase):
         Empresa.insertEmployee(Gabriel)
         result = Empresa.findEmployees("Carlos")
         self.assertEqual(2, len(result))
+
+    def test_nao_insere_mesmo_funcionario_duas_vezes_na_empresa(self):
+        empresa = Enterprise("W")
+        jose = Employee("José")
+
+        empresa.insertEmployee(jose)
+        empresa.insertEmployee(jose)
+
+        self.assertEqual([jose], empresa.Employees)
 
 if __name__ == "__main__":
     unittest.main()
