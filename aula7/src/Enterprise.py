@@ -24,4 +24,6 @@ class Enterprise():
     def insertEmployeeInProject(self, employee: Employee, project: Project):
         if employee not in self.Employees:
             raise ValueError("Funcionário não pertence à empresa")
+        if project not in self.Projects:
+            raise ValueError("Projeto não pertence à empresa")
         project.insertEmployee(employee)
