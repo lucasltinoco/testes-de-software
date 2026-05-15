@@ -20,3 +20,6 @@ class Enterprise():
     def findEmployees(self, string: str):
         results = [e for e in self.Employees if re.search(string, e.name)]
         return results
+
+    def insertEmployeeInProject(self, employee: Employee, project: Project):
+        project.insertEmployee(employee)
