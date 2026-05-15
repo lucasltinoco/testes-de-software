@@ -10,7 +10,8 @@ class Enterprise():
         self.Projects = []
     
     def insertEmployee(self, employee: Employee):
-        self.Employees.append(employee)
+        if employee not in self.Employees:
+            self.Employees.append(employee)
         
     def insertProject(self, project: Project):
         self.Projects.append(project)
