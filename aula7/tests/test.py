@@ -143,5 +143,12 @@ class Test(unittest.TestCase):
         self.assertIn(carlos_segundo, resultado)
         self.assertNotIn(gabriel, resultado)
 
+    def test_busca_funcionario_inexistente_retorna_lista_vazia(self):
+        empresa = Enterprise("W")
+        jose = Employee("José")
+        empresa.insertEmployee(jose)
+        resultado = empresa.findEmployees("Maria")
+        self.assertEqual([], resultado)
+
 if __name__ == "__main__":
     unittest.main()
