@@ -130,5 +130,18 @@ class Test(unittest.TestCase):
         empresa.insertEmployeeInProject(jose, projeto_web)
         self.assertEqual([jose], projeto_web.Employees)
 
+    def test_busca_funcionario_por_nome_retorna_funcionarios_corretos(self):
+        empresa = Enterprise("W")
+        carlos = Employee("Carlos")
+        carlos_segundo = Employee("Carlos")
+        gabriel = Employee("Gabriel")
+        empresa.insertEmployee(carlos)
+        empresa.insertEmployee(carlos_segundo)
+        empresa.insertEmployee(gabriel)
+        resultado = empresa.findEmployees("Carlos")
+        self.assertIn(carlos, resultado)
+        self.assertIn(carlos_segundo, resultado)
+        self.assertNotIn(gabriel, resultado)
+
 if __name__ == "__main__":
     unittest.main()
