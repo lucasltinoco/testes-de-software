@@ -14,7 +14,8 @@ class Enterprise():
             self.Employees.append(employee)
         
     def insertProject(self, project: Project):
-        self.Projects.append(project)
+        if project not in self.Projects:
+            self.Projects.append(project)
         
     def findEmployees(self, string: str):
         results = [e for e in self.Employees if re.search(string, e.name)]
