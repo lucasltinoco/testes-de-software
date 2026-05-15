@@ -107,5 +107,18 @@ class Test(unittest.TestCase):
         self.assertIn(ana, projeto_web.Employees)
         self.assertIn(ana, projeto_mobile.Employees)
 
+    def test_projeto_pode_ter_varios_funcionarios(self):
+        empresa = Enterprise("W")
+        jose = Employee("José")
+        maria = Employee("Maria")
+        projeto_web = Project("Projeto Web")
+        empresa.insertEmployee(jose)
+        empresa.insertEmployee(maria)
+        empresa.insertProject(projeto_web)
+        empresa.insertEmployeeInProject(jose, projeto_web)
+        empresa.insertEmployeeInProject(maria, projeto_web)
+        self.assertIn(jose, projeto_web.Employees)
+        self.assertIn(maria, projeto_web.Employees)
+
 if __name__ == "__main__":
     unittest.main()
