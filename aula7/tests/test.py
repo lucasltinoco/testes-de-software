@@ -85,5 +85,14 @@ class Test(unittest.TestCase):
             empresa.insertEmployeeInProject(pedro, projeto_engine)
         self.assertNotIn(pedro, projeto_engine.Employees)
 
+    def test_nao_inclui_funcionario_em_projeto_que_nao_pertence_a_empresa(self):
+        empresa = Enterprise("W")
+        pedro = Employee("Pedro")
+        projeto_engine = Project("Projeto Engine")
+        empresa.insertEmployee(pedro)
+        with self.assertRaises(ValueError):
+            empresa.insertEmployeeInProject(pedro, projeto_engine)
+        self.assertNotIn(pedro, projeto_engine.Employees)
+
 if __name__ == "__main__":
     unittest.main()
