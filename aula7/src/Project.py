@@ -18,4 +18,4 @@ class Project:
             self.occurrenceKey += 1
             self.occurrences.append(occurrence)
             return occurrence
-        return False
+        raise ValueError("Funcionario fora do projeto")

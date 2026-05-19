@@ -164,7 +164,7 @@ class Test(unittest.TestCase):
         Empresa.insertProject(ProjetoWeb)
         with self.assertRaises(ValueError):
             occurrence = ProjetoWeb.addOccurrence(Carlos, "Bug", "Media", "Vazamento de memoria")
-        self.assertNotIn(occurrence, ProjetoWeb.occurrences)
+            self.assertNotIn(occurrence, ProjetoWeb.occurrences)
 
 if __name__ == "__main__":
     unittest.main()
