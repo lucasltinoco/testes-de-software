@@ -25,4 +25,9 @@ class Project:
             self.occurrences[key].priority = newPriority
         except IndexError:
             raise IndexError("Index out of range")
-
+        
+    def modifyResponsible(self, key, newResponsible: Employee):
+        try:
+            self.occurrences[key].employee = newResponsible
+        except IndexError:
+            raise IndexError("Index out of range")
