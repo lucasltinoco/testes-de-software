@@ -1,5 +1,5 @@
 from Employee import Employee
-from Occurrence import Occurrence, OType, Priority
+from Occurrence import Occurrence, OType, Priority, State
 
 class Project:
     def __init__(self, id):
@@ -32,5 +32,11 @@ class Project:
                 self.occurrences[key].employee = newResponsible
             else:
                 raise ValueError("Funcionario fora do projeto")
+        except IndexError:
+            raise IndexError("Index out of range")
+
+    def endOccurrence(self, key):
+        try:
+            self.occurrences[key].state = State.CLOSED
         except IndexError:
             raise IndexError("Index out of range")

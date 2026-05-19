@@ -3,6 +3,7 @@ from TestHelper import TestHelper
 from Enterprise import Enterprise
 from Employee import Employee
 from Project import Project
+from Occurrence import State
 
 
 class Test(unittest.TestCase):
@@ -229,7 +230,7 @@ class Test(unittest.TestCase):
         Empresa.insertEmployeeInProject(Carlos, ProjetoWeb)
         occurrence = ProjetoWeb.addOccurrence(Carlos, "Bug", "Media", "Vazamento de memoria")
         ProjetoWeb.endOccurrence(occurrence.key)
-        self.assertEqual(ProjetoWeb.occurrences[occurrence.key].state, "Fechada")
+        self.assertEqual(ProjetoWeb.occurrences[occurrence.key].state, State.CLOSED)
 
 
 if __name__ == "__main__":
