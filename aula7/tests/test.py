@@ -175,5 +175,15 @@ class Test(unittest.TestCase):
         ProjetoWeb.modifyPriority(occurrence.key, "Alta")
         self.assertEqual(ProjetoWeb.occurrences[occurrence.key].priority, "Alta")
 
+    def test_modifica_prioridade_de_ocorrencia_inexistente(self):
+        (Empresa, Carlos, ProjetoWeb) = TestHelper().cria_template_padrao()
+        Empresa.insertEmployee(Carlos)
+        Empresa.insertProject(ProjetoWeb)
+        Empresa.insertEmployeeInProject(Carlos, ProjetoWeb)
+        occurrence = ProjetoWeb.addOccurrence(Carlos, "Bug", "Media", "Vazamento de memoria")
+        with self.assertRaises(IndexError):
+            ProjetoWeb.modifyPriority(1, "Alta")
+            self.assertEqual(ProjetoWeb.occurrences[occurrence.key].priority, "Media")
+
 if __name__ == "__main__":
     unittest.main()
