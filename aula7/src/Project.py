@@ -28,6 +28,9 @@ class Project:
         
     def modifyResponsible(self, key, newResponsible: Employee):
         try:
-            self.occurrences[key].employee = newResponsible
+            if newResponsible in self.Employees:
+                self.occurrences[key].employee = newResponsible
+            else:
+                raise ValueError("Funcionario fora do projeto")
         except IndexError:
             raise IndexError("Index out of range")

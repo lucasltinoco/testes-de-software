@@ -218,7 +218,8 @@ class Test(unittest.TestCase):
         Empresa.insertProject(ProjetoWeb)
         Empresa.insertEmployeeInProject(Carlos, ProjetoWeb)
         occurrence = ProjetoWeb.addOccurrence(Carlos, "Bug", "Media", "Vazamento de memoria")
-        ProjetoWeb.modifyResponsible(occurrence.key, Maria)
+        with self.assertRaises(ValueError):
+            ProjetoWeb.modifyResponsible(occurrence.key, Maria)
         self.assertEqual(ProjetoWeb.occurrences[occurrence.key].employee, Carlos)
 
 if __name__ == "__main__":
