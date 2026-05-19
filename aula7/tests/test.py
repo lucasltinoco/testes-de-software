@@ -184,6 +184,19 @@ class Test(unittest.TestCase):
         with self.assertRaises(IndexError):
             ProjetoWeb.modifyPriority(1, "Alta")
             self.assertEqual(ProjetoWeb.occurrences[occurrence.key].priority, "Media")
+            
+    def test_modifica_responsavel_de_ocorrencia(self):
+        (Empresa, Carlos, ProjetoWeb) = TestHelper().cria_template_padrao()
+        Maria = Employee("Maria")
+        Empresa.insertEmployee(Carlos)
+        Empresa.insertEmployee(Maria)
+        Empresa.insertProject(ProjetoWeb)
+        Empresa.insertEmployeeInProject(Carlos, ProjetoWeb)
+        Empresa.insertEmployeeInProject(Maria, ProjetoWeb)
+        occurrence = ProjetoWeb.addOccurrence(Carlos, "Bug", "Media", "Vazamento de memoria")
+        ProjetoWeb.modifyResponsible(occurrence.key, Maria)
+        self.assertEqual(ProjetoWeb.occurrences[occurrence.key].responsible, Maria)
+        
 
 if __name__ == "__main__":
     unittest.main()
