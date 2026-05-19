@@ -209,6 +209,17 @@ class Test(unittest.TestCase):
         with self.assertRaises(IndexError):
             ProjetoWeb.modifyResponsible(1, Maria)
             self.assertEqual(ProjetoWeb.occurrences[occurrence.key].employee, Carlos)
+            
+    def test_modifica_responsavel_de_ocorrencia_com_funcionario_fora_do_projeto(self):
+        (Empresa, Carlos, ProjetoWeb) = TestHelper().cria_template_padrao()
+        Maria = Employee("Maria")
+        Empresa.insertEmployee(Carlos)
+        Empresa.insertEmployee(Maria)
+        Empresa.insertProject(ProjetoWeb)
+        Empresa.insertEmployeeInProject(Carlos, ProjetoWeb)
+        occurrence = ProjetoWeb.addOccurrence(Carlos, "Bug", "Media", "Vazamento de memoria")
+        ProjetoWeb.modifyResponsible(occurrence.key, Maria)
+        self.assertEqual(ProjetoWeb.occurrences[occurrence.key].employee, Carlos)
 
 if __name__ == "__main__":
     unittest.main()
