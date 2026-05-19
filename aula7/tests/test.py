@@ -221,6 +221,16 @@ class Test(unittest.TestCase):
         with self.assertRaises(ValueError):
             ProjetoWeb.modifyResponsible(occurrence.key, Maria)
         self.assertEqual(ProjetoWeb.occurrences[occurrence.key].employee, Carlos)
+        
+    def test_finalizar_ocorrencia(self):
+        (Empresa, Carlos, ProjetoWeb) = TestHelper().cria_template_padrao()
+        Empresa.insertEmployee(Carlos)
+        Empresa.insertProject(ProjetoWeb)
+        Empresa.insertEmployeeInProject(Carlos, ProjetoWeb)
+        occurrence = ProjetoWeb.addOccurrence(Carlos, "Bug", "Media", "Vazamento de memoria")
+        ProjetoWeb.endOccurrence(occurrence.key)
+        self.assertEqual(ProjetoWeb.occurrences[occurrence.key].state, "Fechada")
+
 
 if __name__ == "__main__":
     unittest.main()
