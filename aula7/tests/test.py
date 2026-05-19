@@ -149,6 +149,14 @@ class Test(unittest.TestCase):
         empresa.insertEmployee(jose)
         resultado = empresa.findEmployees("Maria")
         self.assertEqual([], resultado)
+ 
+    def test_cria_ocorrencia_em_projeto(self):
+        (Empresa, Carlos, ProjetoWeb) = TestHelper().cria_template_padrao()
+        Empresa.insertEmployee(Carlos)
+        Empresa.insertProject(ProjetoWeb)
+        Empresa.insertEmployeeInProject(Carlos, ProjetoWeb)
+        occurrence = ProjetoWeb.addOccurrence(Carlos, "Bug", "Media", "Vazamento de memoria")
+        self.assertIn(occurrence, ProjetoWeb.occurrences)
 
 if __name__ == "__main__":
     unittest.main()
