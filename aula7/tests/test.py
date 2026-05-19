@@ -165,6 +165,15 @@ class Test(unittest.TestCase):
         with self.assertRaises(ValueError):
             occurrence = ProjetoWeb.addOccurrence(Carlos, "Bug", "Media", "Vazamento de memoria")
             self.assertNotIn(occurrence, ProjetoWeb.occurrences)
+            
+    def test_modifica_prioridade_de_ocorrencia(self):
+        (Empresa, Carlos, ProjetoWeb) = TestHelper().cria_template_padrao()
+        Empresa.insertEmployee(Carlos)
+        Empresa.insertProject(ProjetoWeb)
+        Empresa.insertEmployeeInProject(Carlos, ProjetoWeb)
+        occurrence = ProjetoWeb.addOccurrence(Carlos, "Bug", "Media", "Vazamento de memoria")
+        ProjetoWeb.modifyPriority(occurrence.key, "Alta")
+        self.assertEqual(ProjetoWeb.occurrences[occurrence.key].priority, "Alta")
 
 if __name__ == "__main__":
     unittest.main()
