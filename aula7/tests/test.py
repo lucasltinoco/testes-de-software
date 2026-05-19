@@ -231,6 +231,16 @@ class Test(unittest.TestCase):
         occurrence = ProjetoWeb.addOccurrence(Carlos, "Bug", "Media", "Vazamento de memoria")
         ProjetoWeb.endOccurrence(occurrence.key)
         self.assertEqual(ProjetoWeb.occurrences[occurrence.key].state, State.CLOSED)
+        
+    def test_finalizar_ocorrencia_inexistente(self):
+        (Empresa, Carlos, ProjetoWeb) = TestHelper().cria_template_padrao()
+        Empresa.insertEmployee(Carlos)
+        Empresa.insertProject(ProjetoWeb)
+        Empresa.insertEmployeeInProject(Carlos, ProjetoWeb)
+        occurrence = ProjetoWeb.addOccurrence(Carlos, "Bug", "Media", "Vazamento de memoria")
+        with self.assertRaises(IndexError):
+            ProjetoWeb.endOccurrence(1)
+            self.assertEqual(ProjetoWeb.occurrences[occurrence.key].state, State.OPEN)
 
 
 if __name__ == "__main__":
