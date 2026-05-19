@@ -195,8 +195,20 @@ class Test(unittest.TestCase):
         Empresa.insertEmployeeInProject(Maria, ProjetoWeb)
         occurrence = ProjetoWeb.addOccurrence(Carlos, "Bug", "Media", "Vazamento de memoria")
         ProjetoWeb.modifyResponsible(occurrence.key, Maria)
-        self.assertEqual(ProjetoWeb.occurrences[occurrence.key].responsible, Maria)
-        
+        self.assertEqual(ProjetoWeb.occurrences[occurrence.key].employee, Maria)
+
+    def test_modifica_responsavel_de_ocorrencia_inexistente(self):
+        (Empresa, Carlos, ProjetoWeb) = TestHelper().cria_template_padrao()
+        Maria = Employee("Maria")
+        Empresa.insertEmployee(Carlos)
+        Empresa.insertEmployee(Maria)
+        Empresa.insertProject(ProjetoWeb)
+        Empresa.insertEmployeeInProject(Carlos, ProjetoWeb)
+        Empresa.insertEmployeeInProject(Maria, ProjetoWeb)
+        occurrence = ProjetoWeb.addOccurrence(Carlos, "Bug", "Media", "Vazamento de memoria")
+        with self.assertRaises(IndexError):
+            ProjetoWeb.modifyResponsible(1, Maria)
+            self.assertEqual(ProjetoWeb.occurrences[occurrence.key].employee, Carlos)
 
 if __name__ == "__main__":
     unittest.main()
