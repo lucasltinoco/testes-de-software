@@ -19,3 +19,10 @@ class Project:
             self.occurrences.append(occurrence)
             return occurrence
         raise ValueError("Funcionario fora do projeto")
+    
+    def modifyPriority(self, key, newPriority: Priority):
+        try:
+            self.occurrences[key].priority = newPriority
+        except IndexError:
+            raise IndexError("Index out of range")
+
