@@ -37,6 +37,9 @@ class Project:
 
     def endOccurrence(self, key):
         try:
-            self.occurrences[key].state = State.CLOSED
+            if self.occurrences[key].state == State.OPEN:
+                self.occurrences[key].state = State.CLOSED
+            else:
+                raise ValueError("Ocorrencia ja finalizada")
         except IndexError:
             raise IndexError("Index out of range")
