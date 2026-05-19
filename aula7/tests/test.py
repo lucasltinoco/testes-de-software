@@ -158,5 +158,13 @@ class Test(unittest.TestCase):
         occurrence = ProjetoWeb.addOccurrence(Carlos, "Bug", "Media", "Vazamento de memoria")
         self.assertIn(occurrence, ProjetoWeb.occurrences)
 
+    def test_cria_ocorrencia_com_responsavel_fora_do_projeto(self):
+        (Empresa, Carlos, ProjetoWeb) = TestHelper().cria_template_padrao()
+        Empresa.insertEmployee(Carlos)
+        Empresa.insertProject(ProjetoWeb)
+        with self.assertRaises(ValueError):
+            occurrence = ProjetoWeb.addOccurrence(Carlos, "Bug", "Media", "Vazamento de memoria")
+        self.assertNotIn(occurrence, ProjetoWeb.occurrences)
+
 if __name__ == "__main__":
     unittest.main()
