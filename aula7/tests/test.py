@@ -11,7 +11,7 @@ from TestHelper import TestHelper
 from Enterprise import Enterprise
 from Employee import Employee
 from Project import Project
-from Occurrence import State
+from Occurrence import State, OType, Priority
 
 
 class Test(unittest.TestCase):
@@ -260,6 +260,23 @@ class Test(unittest.TestCase):
         occurrence = projeto_web.addOccurrence(carlos, "Bug", "Media", "Vazamento de memoria")
         projeto_web.endOccurrence(occurrence.key)
         self.assertRaises(ValueError, projeto_web.endOccurrence, occurrence.key)
+
+    def test_ocorrencia_criada_possui_chave_resumo_tipo_prioridade_responsavel_e_estado_aberto(self):
+        empresa = Enterprise("W")
+        ana = Employee("Ana")
+        projeto_web = Project("Projeto Web")
+        empresa.insertEmployee(ana)
+        empresa.insertProject(projeto_web)
+        empresa.insertEmployeeInProject(ana, projeto_web)
+        ocorrencia = projeto_web.addOccurrence(ana, OType.BUG, Priority.MEDIUM, "Vazamento de memoria")
+
+        self.assertEqual(0, ocorrencia.key)
+        self.assertEqual("Vazamento de memoria", ocorrencia.description)
+        self.assertEqual(OType.BUG, ocorrencia.otype)
+        self.assertEqual(Priority.MEDIUM, ocorrencia.priority)
+        self.assertEqual(ana, ocorrencia.employee)
+        self.assertEqual(State.OPEN, ocorrencia.state)
+        self.assertIn(ocorrencia, projeto_web.occurrences)
 
 
 if __name__ == "__main__":
