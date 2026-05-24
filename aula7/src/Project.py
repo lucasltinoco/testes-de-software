@@ -14,9 +14,12 @@ class Project:
             
     def addOccurrence(self, employee: Employee, otype: OType, priority: Priority, description: str):
         if employee in self.Employees:
+            if employee.openOccurrences >= 10:
+                raise ValueError("Funcionario possui 10 ocorrencias abertas")
             occurrence = Occurrence(self.occurrenceKey, employee, otype, priority, description)
             self.occurrenceKey += 1
             self.occurrences.append(occurrence)
+            employee.openOccurrences += 1
             return occurrence
         raise ValueError("Funcionario fora do projeto")
     
