@@ -349,6 +349,34 @@ class Test(unittest.TestCase):
             projeto_web.modifyResponsible(ocorrencia.key, maria)
         self.assertEqual(carlos, projeto_web.occurrences[ocorrencia.key].employee)
 
+    def test_funcionario_nao_pode_ser_responsavel_por_onze_ocorrencias_abertas_em_varios_projetos(self):
+        empresa = Enterprise("W")
+        ana = Employee("Ana")
+        projeto_web = Project("Projeto Web")
+        projeto_mobile = Project("Projeto Mobile")
+
+        empresa.insertEmployee(ana)
+        empresa.insertProject(projeto_web)
+        empresa.insertProject(projeto_mobile)
+        empresa.insertEmployeeInProject(ana, projeto_web)
+        empresa.insertEmployeeInProject(ana, projeto_mobile)
+        projeto_web.addOccurrence(ana, OType.TASK, Priority.MEDIUM, "Criar tela de login")
+        projeto_web.addOccurrence(ana, OType.TASK, Priority.MEDIUM, "Criar tela de cadastro")
+        projeto_web.addOccurrence(ana, OType.BUG, Priority.HIGH, "Corrigir erro no menu")
+        projeto_web.addOccurrence(ana, OType.REFAC, Priority.LOW, "Refatorar CSS")
+        projeto_web.addOccurrence(ana, OType.BUG, Priority.MEDIUM, "Corrigir validacao de email")
+        projeto_mobile.addOccurrence(ana, OType.TASK, Priority.MEDIUM, "Criar tela inicial")
+        projeto_mobile.addOccurrence(ana, OType.TASK, Priority.MEDIUM, "Criar tela de perfil")
+        projeto_mobile.addOccurrence(ana, OType.BUG, Priority.HIGH, "Corrigir crash no login")
+        projeto_mobile.addOccurrence(ana, OType.REFAC, Priority.LOW, "Refatorar navegacao")
+        projeto_mobile.addOccurrence(ana, OType.BUG, Priority.MEDIUM, "Corrigir validacao de senha")
+
+        with self.assertRaises(ValueError):
+            projeto_mobile.addOccurrence(ana,OType.TASK,Priority.LOW,"Adicionar tela de configuracoes")
+
+        self.assertEqual(5, len(projeto_web.occurrences))
+        self.assertEqual(5, len(projeto_mobile.occurrences))
+
 
 if __name__ == "__main__":
     unittest.main()
