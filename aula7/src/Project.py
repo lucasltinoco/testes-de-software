@@ -47,6 +47,7 @@ class Project:
         try:
             if self.occurrences[key].state == State.OPEN:
                 self.occurrences[key].state = State.CLOSED
+                self.occurrences[key].employee.openOccurrences -= 1
             else:
                 raise ValueError("Ocorrencia ja finalizada")
         except IndexError:
