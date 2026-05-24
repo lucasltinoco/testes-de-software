@@ -377,6 +377,35 @@ class Test(unittest.TestCase):
         self.assertEqual(5, len(projeto_web.occurrences))
         self.assertEqual(5, len(projeto_mobile.occurrences))
 
+    def test_funcionario_pode_receber_nova_ocorrencia_apos_fechar_uma_das_dez_abertas(self):
+        empresa = Enterprise("W")
+        ana = Employee("Ana")
+        projeto_web = Project("Projeto Web")
+        projeto_mobile = Project("Projeto Mobile")
+
+        empresa.insertEmployee(ana)
+        empresa.insertProject(projeto_web)
+        empresa.insertProject(projeto_mobile)
+        empresa.insertEmployeeInProject(ana, projeto_web)
+        empresa.insertEmployeeInProject(ana, projeto_mobile)
+
+        primeira = projeto_web.addOccurrence(ana, OType.TASK, Priority.MEDIUM, "Criar tela de login")
+        projeto_web.addOccurrence(ana, OType.TASK, Priority.MEDIUM, "Criar tela de cadastro")
+        projeto_web.addOccurrence(ana, OType.BUG, Priority.HIGH, "Corrigir erro no menu")
+        projeto_web.addOccurrence(ana, OType.REFAC, Priority.LOW, "Refatorar CSS")
+        projeto_web.addOccurrence(ana, OType.BUG, Priority.MEDIUM, "Corrigir validacao de email")
+        projeto_mobile.addOccurrence(ana, OType.TASK, Priority.MEDIUM, "Criar tela inicial")
+        projeto_mobile.addOccurrence(ana, OType.TASK, Priority.MEDIUM, "Criar tela de perfil")
+        projeto_mobile.addOccurrence(ana, OType.BUG, Priority.HIGH, "Corrigir crash no login")
+        projeto_mobile.addOccurrence(ana, OType.REFAC, Priority.LOW, "Refatorar navegacao")
+        projeto_mobile.addOccurrence(ana, OType.BUG, Priority.MEDIUM, "Corrigir validacao de senha")
+        projeto_web.endOccurrence(primeira.key)
+        nova = projeto_mobile.addOccurrence(ana,OType.TASK,Priority.LOW,"Adicionar tela de configuracoes")
+
+        self.assertEqual(State.CLOSED, primeira.state)
+        self.assertIn(nova, projeto_mobile.occurrences)
+        self.assertEqual(State.OPEN, nova.state)
+
 
 if __name__ == "__main__":
     unittest.main()
