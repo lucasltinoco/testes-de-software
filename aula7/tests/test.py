@@ -1,10 +1,10 @@
 from pathlib import Path
 import sys
 
-ROOT_DIR = Path(__file__).resolve().parents[1]
-SRC_DIR = ROOT_DIR / "src"
+root_dir = Path(__file__).resolve().parents[1]
+src_dir = root_dir / "src"
 
-sys.path.insert(0, str(SRC_DIR))
+sys.path.insert(0, str(src_dir))
 
 import unittest
 from TestHelper import TestHelper
@@ -15,51 +15,51 @@ from Occurrence import State
 
 
 class Test(unittest.TestCase):
-    def test_cria_Empresa_W(self):
+    def test_cria_empresa_w(self):
         result = Enterprise("W")
         self.assertIsInstance(result, Enterprise)
 
-    def test_cria_Funcionario_joao(self):
+    def test_cria_funcionario_joao(self):
         funcionario = Employee("Joao")
         self.assertIsInstance(funcionario, Employee)
         
-    def test_cria_Funcionario_na_Empresa(self):
-        Empresa = Enterprise("W")
-        Pedro = Employee("Pedro")
-        Empresa.insertEmployee(Pedro)
-        self.assertIn(Pedro, Empresa.Employees)
+    def test_cria_funcionario_na_empresa(self):
+        empresa = Enterprise("W")
+        pedro = Employee("Pedro")
+        empresa.insertEmployee(pedro)
+        self.assertIn(pedro, empresa.Employees)
 
-    def test_cria_Projeto(self):
+    def test_cria_projeto(self):
         projeto = Project("1")
         self.assertIsInstance(projeto, Project)
         
     def test_incluir_projeto_na_empresa(self):
-        EmpresaW = Enterprise("W")
+        empresa_w = Enterprise("W")
         projeto2 = Project("2")
-        EmpresaW.insertProject(projeto2)
-        self.assertIn(projeto2, EmpresaW.Projects)
+        empresa_w.insertProject(projeto2)
+        self.assertIn(projeto2, empresa_w.Projects)
         
     def test_incluir_funcionario_em_projeto(self):
-        (_, Carlos, ProjetoWeb) = TestHelper().cria_template_padrao()
-        ProjetoWeb.insertEmployee(Carlos)
-        self.assertIn(Carlos, ProjetoWeb.Employees)
+        (_, carlos, projeto_web) = TestHelper().cria_template_padrao()
+        projeto_web.insertEmployee(carlos)
+        self.assertIn(carlos, projeto_web.Employees)
         
     def test_insere_multiplos_funcionarios_com_nome_igual_na_empresa(self):
-        Empresa = Enterprise("W")
-        Joao = Employee("João")
-        Joao2 = Employee("João")
-        Empresa.insertEmployee(Joao)
-        Empresa.insertEmployee(Joao2)
-        self.assertEqual(2, len(Empresa.Employees))
+        empresa = Enterprise("W")
+        joao = Employee("João")
+        joao2 = Employee("João")
+        empresa.insertEmployee(joao)
+        empresa.insertEmployee(joao2)
+        self.assertEqual(2, len(empresa.Employees))
 
     def test_busca_funcionario_por_nome_na_empresa(self):
-        (Empresa, Carlos, _) = TestHelper().cria_template_padrao()
-        Empresa.insertEmployee(Carlos)
-        Carlos2 = Employee("Carlos")
-        Empresa.insertEmployee(Carlos2)
-        Gabriel = Employee("Gabriel")
-        Empresa.insertEmployee(Gabriel)
-        result = Empresa.findEmployees("Carlos")
+        (empresa, carlos, _) = TestHelper().cria_template_padrao()
+        empresa.insertEmployee(carlos)
+        carlos2 = Employee("Carlos")
+        empresa.insertEmployee(carlos2)
+        gabriel = Employee("Gabriel")
+        empresa.insertEmployee(gabriel)
+        result = empresa.findEmployees("Carlos")
         self.assertEqual(2, len(result))
 
     def test_nao_insere_mesmo_funcionario_duas_vezes_na_empresa(self):
@@ -158,106 +158,108 @@ class Test(unittest.TestCase):
         empresa.insertEmployee(jose)
         resultado = empresa.findEmployees("Maria")
         self.assertEqual([], resultado)
+
+#Parte 2
  
     def test_cria_ocorrencia_em_projeto(self):
-        (Empresa, Carlos, ProjetoWeb) = TestHelper().cria_template_padrao()
-        Empresa.insertEmployee(Carlos)
-        Empresa.insertProject(ProjetoWeb)
-        Empresa.insertEmployeeInProject(Carlos, ProjetoWeb)
-        occurrence = ProjetoWeb.addOccurrence(Carlos, "Bug", "Media", "Vazamento de memoria")
-        self.assertIn(occurrence, ProjetoWeb.occurrences)
+        (empresa, carlos, projeto_web) = TestHelper().cria_template_padrao()
+        empresa.insertEmployee(carlos)
+        empresa.insertProject(projeto_web)
+        empresa.insertEmployeeInProject(carlos, projeto_web)
+        occurrence = projeto_web.addOccurrence(carlos, "Bug", "Media", "Vazamento de memoria")
+        self.assertIn(occurrence, projeto_web.occurrences)
 
     def test_cria_ocorrencia_com_responsavel_fora_do_projeto(self):
-        (Empresa, Carlos, ProjetoWeb) = TestHelper().cria_template_padrao()
-        Empresa.insertEmployee(Carlos)
-        Empresa.insertProject(ProjetoWeb)
+        (empresa, carlos, projeto_web) = TestHelper().cria_template_padrao()
+        empresa.insertEmployee(carlos)
+        empresa.insertProject(projeto_web)
         with self.assertRaises(ValueError):
-            occurrence = ProjetoWeb.addOccurrence(Carlos, "Bug", "Media", "Vazamento de memoria")
-            self.assertNotIn(occurrence, ProjetoWeb.occurrences)
+            occurrence = projeto_web.addOccurrence(carlos, "Bug", "Media", "Vazamento de memoria")
+            self.assertNotIn(occurrence, projeto_web.occurrences)
             
     def test_modifica_prioridade_de_ocorrencia(self):
-        (Empresa, Carlos, ProjetoWeb) = TestHelper().cria_template_padrao()
-        Empresa.insertEmployee(Carlos)
-        Empresa.insertProject(ProjetoWeb)
-        Empresa.insertEmployeeInProject(Carlos, ProjetoWeb)
-        occurrence = ProjetoWeb.addOccurrence(Carlos, "Bug", "Media", "Vazamento de memoria")
-        ProjetoWeb.modifyPriority(occurrence.key, "Alta")
-        self.assertEqual(ProjetoWeb.occurrences[occurrence.key].priority, "Alta")
+        (empresa, carlos, projeto_web) = TestHelper().cria_template_padrao()
+        empresa.insertEmployee(carlos)
+        empresa.insertProject(projeto_web)
+        empresa.insertEmployeeInProject(carlos, projeto_web)
+        occurrence = projeto_web.addOccurrence(carlos, "Bug", "Media", "Vazamento de memoria")
+        projeto_web.modifyPriority(occurrence.key, "Alta")
+        self.assertEqual(projeto_web.occurrences[occurrence.key].priority, "Alta")
 
     def test_modifica_prioridade_de_ocorrencia_inexistente(self):
-        (Empresa, Carlos, ProjetoWeb) = TestHelper().cria_template_padrao()
-        Empresa.insertEmployee(Carlos)
-        Empresa.insertProject(ProjetoWeb)
-        Empresa.insertEmployeeInProject(Carlos, ProjetoWeb)
-        occurrence = ProjetoWeb.addOccurrence(Carlos, "Bug", "Media", "Vazamento de memoria")
+        (empresa, carlos, projeto_web) = TestHelper().cria_template_padrao()
+        empresa.insertEmployee(carlos)
+        empresa.insertProject(projeto_web)
+        empresa.insertEmployeeInProject(carlos, projeto_web)
+        occurrence = projeto_web.addOccurrence(carlos, "Bug", "Media", "Vazamento de memoria")
         with self.assertRaises(IndexError):
-            ProjetoWeb.modifyPriority(1, "Alta")
-            self.assertEqual(ProjetoWeb.occurrences[occurrence.key].priority, "Media")
+            projeto_web.modifyPriority(1, "Alta")
+            self.assertEqual(projeto_web.occurrences[occurrence.key].priority, "Media")
             
     def test_modifica_responsavel_de_ocorrencia(self):
-        (Empresa, Carlos, ProjetoWeb) = TestHelper().cria_template_padrao()
-        Maria = Employee("Maria")
-        Empresa.insertEmployee(Carlos)
-        Empresa.insertEmployee(Maria)
-        Empresa.insertProject(ProjetoWeb)
-        Empresa.insertEmployeeInProject(Carlos, ProjetoWeb)
-        Empresa.insertEmployeeInProject(Maria, ProjetoWeb)
-        occurrence = ProjetoWeb.addOccurrence(Carlos, "Bug", "Media", "Vazamento de memoria")
-        ProjetoWeb.modifyResponsible(occurrence.key, Maria)
-        self.assertEqual(ProjetoWeb.occurrences[occurrence.key].employee, Maria)
+        (empresa, carlos, projeto_web) = TestHelper().cria_template_padrao()
+        maria = Employee("Maria")
+        empresa.insertEmployee(carlos)
+        empresa.insertEmployee(maria)
+        empresa.insertProject(projeto_web)
+        empresa.insertEmployeeInProject(carlos, projeto_web)
+        empresa.insertEmployeeInProject(maria, projeto_web)
+        occurrence = projeto_web.addOccurrence(carlos, "Bug", "Media", "Vazamento de memoria")
+        projeto_web.modifyResponsible(occurrence.key, maria)
+        self.assertEqual(projeto_web.occurrences[occurrence.key].employee, maria)
 
     def test_modifica_responsavel_de_ocorrencia_inexistente(self):
-        (Empresa, Carlos, ProjetoWeb) = TestHelper().cria_template_padrao()
-        Maria = Employee("Maria")
-        Empresa.insertEmployee(Carlos)
-        Empresa.insertEmployee(Maria)
-        Empresa.insertProject(ProjetoWeb)
-        Empresa.insertEmployeeInProject(Carlos, ProjetoWeb)
-        Empresa.insertEmployeeInProject(Maria, ProjetoWeb)
-        occurrence = ProjetoWeb.addOccurrence(Carlos, "Bug", "Media", "Vazamento de memoria")
+        (empresa, carlos, projeto_web) = TestHelper().cria_template_padrao()
+        maria = Employee("Maria")
+        empresa.insertEmployee(carlos)
+        empresa.insertEmployee(maria)
+        empresa.insertProject(projeto_web)
+        empresa.insertEmployeeInProject(carlos, projeto_web)
+        empresa.insertEmployeeInProject(maria, projeto_web)
+        occurrence = projeto_web.addOccurrence(carlos, "Bug", "Media", "Vazamento de memoria")
         with self.assertRaises(IndexError):
-            ProjetoWeb.modifyResponsible(1, Maria)
-            self.assertEqual(ProjetoWeb.occurrences[occurrence.key].employee, Carlos)
+            projeto_web.modifyResponsible(1, maria)
+            self.assertEqual(projeto_web.occurrences[occurrence.key].employee, carlos)
             
     def test_modifica_responsavel_de_ocorrencia_com_funcionario_fora_do_projeto(self):
-        (Empresa, Carlos, ProjetoWeb) = TestHelper().cria_template_padrao()
-        Maria = Employee("Maria")
-        Empresa.insertEmployee(Carlos)
-        Empresa.insertEmployee(Maria)
-        Empresa.insertProject(ProjetoWeb)
-        Empresa.insertEmployeeInProject(Carlos, ProjetoWeb)
-        occurrence = ProjetoWeb.addOccurrence(Carlos, "Bug", "Media", "Vazamento de memoria")
+        (empresa, carlos, projeto_web) = TestHelper().cria_template_padrao()
+        maria = Employee("Maria")
+        empresa.insertEmployee(carlos)
+        empresa.insertEmployee(maria)
+        empresa.insertProject(projeto_web)
+        empresa.insertEmployeeInProject(carlos, projeto_web)
+        occurrence = projeto_web.addOccurrence(carlos, "Bug", "Media", "Vazamento de memoria")
         with self.assertRaises(ValueError):
-            ProjetoWeb.modifyResponsible(occurrence.key, Maria)
-        self.assertEqual(ProjetoWeb.occurrences[occurrence.key].employee, Carlos)
+            projeto_web.modifyResponsible(occurrence.key, maria)
+        self.assertEqual(projeto_web.occurrences[occurrence.key].employee, carlos)
         
     def test_finalizar_ocorrencia(self):
-        (Empresa, Carlos, ProjetoWeb) = TestHelper().cria_template_padrao()
-        Empresa.insertEmployee(Carlos)
-        Empresa.insertProject(ProjetoWeb)
-        Empresa.insertEmployeeInProject(Carlos, ProjetoWeb)
-        occurrence = ProjetoWeb.addOccurrence(Carlos, "Bug", "Media", "Vazamento de memoria")
-        ProjetoWeb.endOccurrence(occurrence.key)
-        self.assertEqual(ProjetoWeb.occurrences[occurrence.key].state, State.CLOSED)
+        (empresa, carlos, projeto_web) = TestHelper().cria_template_padrao()
+        empresa.insertEmployee(carlos)
+        empresa.insertProject(projeto_web)
+        empresa.insertEmployeeInProject(carlos, projeto_web)
+        occurrence = projeto_web.addOccurrence(carlos, "Bug", "Media", "Vazamento de memoria")
+        projeto_web.endOccurrence(occurrence.key)
+        self.assertEqual(projeto_web.occurrences[occurrence.key].state, State.CLOSED)
         
     def test_finalizar_ocorrencia_inexistente(self):
-        (Empresa, Carlos, ProjetoWeb) = TestHelper().cria_template_padrao()
-        Empresa.insertEmployee(Carlos)
-        Empresa.insertProject(ProjetoWeb)
-        Empresa.insertEmployeeInProject(Carlos, ProjetoWeb)
-        occurrence = ProjetoWeb.addOccurrence(Carlos, "Bug", "Media", "Vazamento de memoria")
+        (empresa, carlos, projeto_web) = TestHelper().cria_template_padrao()
+        empresa.insertEmployee(carlos)
+        empresa.insertProject(projeto_web)
+        empresa.insertEmployeeInProject(carlos, projeto_web)
+        occurrence = projeto_web.addOccurrence(carlos, "Bug", "Media", "Vazamento de memoria")
         with self.assertRaises(IndexError):
-            ProjetoWeb.endOccurrence(1)
-            self.assertEqual(ProjetoWeb.occurrences[occurrence.key].state, State.OPEN)
+            projeto_web.endOccurrence(1)
+            self.assertEqual(projeto_web.occurrences[occurrence.key].state, State.OPEN)
             
     def test_finalizar_ocorrencia_ja_finalizada(self):
-        (Empresa, Carlos, ProjetoWeb) = TestHelper().cria_template_padrao()
-        Empresa.insertEmployee(Carlos)
-        Empresa.insertProject(ProjetoWeb)
-        Empresa.insertEmployeeInProject(Carlos, ProjetoWeb)
-        occurrence = ProjetoWeb.addOccurrence(Carlos, "Bug", "Media", "Vazamento de memoria")
-        ProjetoWeb.endOccurrence(occurrence.key)
-        self.assertRaises(ValueError, ProjetoWeb.endOccurrence, occurrence.key)
+        (empresa, carlos, projeto_web) = TestHelper().cria_template_padrao()
+        empresa.insertEmployee(carlos)
+        empresa.insertProject(projeto_web)
+        empresa.insertEmployeeInProject(carlos, projeto_web)
+        occurrence = projeto_web.addOccurrence(carlos, "Bug", "Media", "Vazamento de memoria")
+        projeto_web.endOccurrence(occurrence.key)
+        self.assertRaises(ValueError, projeto_web.endOccurrence, occurrence.key)
 
 
 if __name__ == "__main__":
