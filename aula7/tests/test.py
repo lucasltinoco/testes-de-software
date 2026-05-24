@@ -314,6 +314,22 @@ class Test(unittest.TestCase):
         self.assertIn(bug, projeto_api.occurrences)
         self.assertIn(refatoracao, projeto_api.occurrences)
 
+    def test_nao_modifica_prioridade_de_ocorrencia_fechada(self):
+        empresa = Enterprise("W")
+        carlos = Employee("Carlos")
+        projeto_web = Project("Projeto Web")
+
+        empresa.insertEmployee(carlos)
+        empresa.insertProject(projeto_web)
+        empresa.insertEmployeeInProject(carlos, projeto_web)
+
+        ocorrencia = projeto_web.addOccurrence(carlos,OType.BUG,Priority.MEDIUM,"Vazamento de memoria")
+        projeto_web.endOccurrence(ocorrencia.key)
+        
+        with self.assertRaises(ValueError):
+            projeto_web.modifyPriority(ocorrencia.key, Priority.HIGH)
+        self.assertEqual(Priority.MEDIUM, projeto_web.occurrences[ocorrencia.key].priority)
+
 
 if __name__ == "__main__":
     unittest.main()
