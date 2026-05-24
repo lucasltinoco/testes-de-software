@@ -278,6 +278,22 @@ class Test(unittest.TestCase):
         self.assertEqual(State.OPEN, ocorrencia.state)
         self.assertIn(ocorrencia, projeto_web.occurrences)
 
+    def test_ocorrencias_do_mesmo_projeto_possuem_chaves_unicas(self):
+        empresa = Enterprise("W")
+        ana = Employee("Ana")
+        projeto_web = Project("Projeto Web")
+
+        empresa.insertEmployee(ana)
+        empresa.insertProject(projeto_web)
+        empresa.insertEmployeeInProject(ana, projeto_web)
+
+        vazamento_memoria = projeto_web.addOccurrence(ana,OType.BUG,Priority.HIGH,"Vazamento de memoria")
+        atualizar_layout = projeto_web.addOccurrence(ana,OType.TASK,Priority.MEDIUM,"Atualizar layout da tela inicial")
+
+        self.assertNotEqual(vazamento_memoria.key, atualizar_layout.key)
+        self.assertIn(vazamento_memoria, projeto_web.occurrences)
+        self.assertIn(atualizar_layout, projeto_web.occurrences)
+
 
 if __name__ == "__main__":
     unittest.main()
