@@ -294,6 +294,26 @@ class Test(unittest.TestCase):
         self.assertIn(vazamento_memoria, projeto_web.occurrences)
         self.assertIn(atualizar_layout, projeto_web.occurrences)
 
+    def test_projeto_cria_multiplas_ocorrencias(self):
+        empresa = Enterprise("W")
+        bruna = Employee("Bruna")
+        projeto_api = Project("Projeto API")
+
+        empresa.insertEmployee(bruna)
+        empresa.insertProject(projeto_api)
+        empresa.insertEmployeeInProject(bruna, projeto_api)
+
+        tarefa = projeto_api.addOccurrence(bruna,OType.TASK,Priority.LOW,"Criar endpoint de login")
+        bug = projeto_api.addOccurrence(bruna,OType.BUG,Priority.HIGH,"Corrigir erro de autenticacao")
+        refatoracao = projeto_api.addOccurrence(bruna,OType.REFAC,Priority.MEDIUM,"Refatorar servico de usuarios")
+
+        self.assertEqual(OType.TASK, tarefa.otype)
+        self.assertEqual(OType.BUG, bug.otype)
+        self.assertEqual(OType.REFAC, refatoracao.otype)
+        self.assertIn(tarefa, projeto_api.occurrences)
+        self.assertIn(bug, projeto_api.occurrences)
+        self.assertIn(refatoracao, projeto_api.occurrences)
+
 
 if __name__ == "__main__":
     unittest.main()
