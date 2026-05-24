@@ -325,10 +325,29 @@ class Test(unittest.TestCase):
 
         ocorrencia = projeto_web.addOccurrence(carlos,OType.BUG,Priority.MEDIUM,"Vazamento de memoria")
         projeto_web.endOccurrence(ocorrencia.key)
-        
+
         with self.assertRaises(ValueError):
             projeto_web.modifyPriority(ocorrencia.key, Priority.HIGH)
         self.assertEqual(Priority.MEDIUM, projeto_web.occurrences[ocorrencia.key].priority)
+
+    def test_nao_modifica_responsavel_de_ocorrencia_fechada(self):
+        empresa = Enterprise("W")
+        carlos = Employee("Carlos")
+        maria = Employee("Maria")
+        projeto_web = Project("Projeto Web")
+
+        empresa.insertEmployee(carlos)
+        empresa.insertEmployee(maria)
+        empresa.insertProject(projeto_web)
+        empresa.insertEmployeeInProject(carlos, projeto_web)
+        empresa.insertEmployeeInProject(maria, projeto_web)
+
+        ocorrencia = projeto_web.addOccurrence(carlos,OType.BUG,Priority.MEDIUM,"Vazamento de memoria")
+        projeto_web.endOccurrence(ocorrencia.key)
+
+        with self.assertRaises(ValueError):
+            projeto_web.modifyResponsible(ocorrencia.key, maria)
+        self.assertEqual(carlos, projeto_web.occurrences[ocorrencia.key].employee)
 
 
 if __name__ == "__main__":
