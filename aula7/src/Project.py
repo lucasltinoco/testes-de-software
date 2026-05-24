@@ -22,6 +22,9 @@ class Project:
     
     def modifyPriority(self, key, newPriority: Priority):
         try:
+            occurrence = self.occurrences[key]
+            if occurrence.state == State.CLOSED:
+                raise ValueError("Ocorrencia fechada")
             self.occurrences[key].priority = newPriority
         except IndexError:
             raise IndexError("Index out of range")
