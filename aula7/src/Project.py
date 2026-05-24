@@ -31,6 +31,8 @@ class Project:
         
     def modifyResponsible(self, key, newResponsible: Employee):
         try:
+            if self.occurrences[key].state == State.CLOSED:
+                raise ValueError("Ocorrencia fechada")
             if newResponsible in self.Employees:
                 self.occurrences[key].employee = newResponsible
             else:
