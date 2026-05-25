@@ -1,3 +1,11 @@
+from pathlib import Path
+import sys
+
+root_dir = Path(__file__).resolve().parents[1]
+src_dir = root_dir / "src"
+
+sys.path.insert(0, str(src_dir))
+
 from Enterprise import Enterprise
 from Employee import Employee
 from Project import Project
