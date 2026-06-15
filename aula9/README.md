@@ -1,0 +1,1 @@
+PYTHONPATH=src behave testes/features > output.log
